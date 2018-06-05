@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace anonQuest
+namespace AnonQuest
 {
     public class BundleConfig
     {

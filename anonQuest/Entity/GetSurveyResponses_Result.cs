@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace anonQuest.Entity
+namespace AnonQuest.Entity
 {
     using System;
     

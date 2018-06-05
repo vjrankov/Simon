@@ -3,10 +3,10 @@ using System.Text;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
-using anonQuest.Entity;
-using PhiMarketing.Models;
+using AnonQuest.Entity;
+using AnonQuest.Models;
 
-namespace PhiMarketing.Controllers
+namespace AnonQuest.Controllers
 {
     public class SurveyController : Controller
     {
@@ -15,17 +15,17 @@ namespace PhiMarketing.Controllers
         [HttpGet]
         public ActionResult FillOut()
         {
-            Survey survey = new Survey();
+            SurveyVM survey = new SurveyVM();
             survey.Init();
             return View(survey);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Submit(Survey survey)
+        public ActionResult Submit(SurveyVM survey)
         {
             //LogHelper.Info(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Post action invoked.");
-            Survey questions = new Survey();
+            SurveyVM questions = new SurveyVM();
             questions.Init();
             if (ModelState.IsValid)
             {
@@ -54,7 +54,7 @@ namespace PhiMarketing.Controllers
             base.Dispose(disposing);
         }
 
-        private bool SurveyMail(Survey questions, Survey answers)
+        private bool SurveyMail(SurveyVM questions, SurveyVM answers)
         {
             string contactFromAddress = @System.Configuration.ConfigurationManager.AppSettings["ContactFromAddress"];
             string contactBCCAddress = @System.Configuration.ConfigurationManager.AppSettings["ContactBCCAddress"];
@@ -99,7 +99,7 @@ namespace PhiMarketing.Controllers
             return true;
         }
 
-        public static string RenderViewToString(Survey questions, Survey answers)
+        public static string RenderViewToString(SurveyVM questions, SurveyVM answers)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<html><head><title>{0} Submitted</title></head><body><table border='0' cellpadding='10' cellspacing='10' width='100%'>", questions.SurveyTitle);

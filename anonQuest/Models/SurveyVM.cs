@@ -10,14 +10,14 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using anonQuest.Entity;
+using AnonQuest.Entity;
 
-namespace PhiMarketing.Models
+namespace AnonQuest.Models
 {
-    public class Survey
+    public class SurveyVM
     {
         private SurveyDBEntities db = null;
-        public Survey()
+        public SurveyVM()
         {
             ContactInfo = new ContactInfo();
             Subjects = new List<Subject>();
@@ -127,7 +127,7 @@ namespace PhiMarketing.Models
              return (possibleAnswers.Count > 0) ? possibleAnswers : null; ;
         }
 
-        public bool CollectAnswers(Survey survey)
+        public bool CollectAnswers(SurveyVM survey)
         {
             using (SurveyDBEntities context = new SurveyDBEntities())
             {

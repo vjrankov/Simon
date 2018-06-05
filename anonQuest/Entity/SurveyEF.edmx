@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SurveyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SurveyDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ResponseAnswer">
           <Key>
             <PropertyRef Name="ResponseAnswerID" />
@@ -96,8 +96,7 @@
           <EntitySet Name="SurveyResponse" EntityType="Self.SurveyResponse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SurveySubject" EntityType="Self.SurveySubject" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SurveyDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -180,16 +179,16 @@
           <EntitySet Name="SurveySubjects" EntityType="Self.SurveySubject" />
           <FunctionImport Name="GetSurveyList" ReturnType="Collection(SurveyDBModel.GetSurveyList_Result)" />
           <FunctionImport Name="GetSurveyPossibleAnswers" ReturnType="Collection(SurveyDBModel.GetSurveyPossibleAnswers_Result)">
-            <Parameter Name="SurveyID" Mode="In" Type="Int32" />
+          <Parameter Name="SurveyID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSurveyQuestions" ReturnType="Collection(SurveyDBModel.GetSurveyQuestions_Result)">
-            <Parameter Name="SurveyID" Mode="In" Type="Int32" />
+          <Parameter Name="SurveyID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSurveyResponses" ReturnType="Collection(SurveyDBModel.GetSurveyResponses_Result)">
-            <Parameter Name="SurveyID" Mode="In" Type="Int32" />
+          <Parameter Name="SurveyID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSurveySubjects" ReturnType="Collection(SurveyDBModel.GetSurveySubjects_Result)">
-            <Parameter Name="SurveyID" Mode="In" Type="Int32" />
+          <Parameter Name="SurveyID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetSurveyList_Result">
