@@ -1,5 +1,10 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
 /anonQuest/obj/Debug
+/.vs/anonQuest/v15/.suo
+*.ide
+*.config
+/packages/Antlr.3.4.1.9004/lib
+packages/Microsoft.Net.Compilers.2.1.0/tools/Microsoft.Build.Tasks.CodeAnalysis.dll

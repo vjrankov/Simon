@@ -9,15 +9,14 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using PhiMarketing.Entity;
 using System.ComponentModel.DataAnnotations;
-using Umbraco.Core.Logging;
+using anonQuest.Entity;
 
 namespace PhiMarketing.Models
 {
     public class Survey
     {
-        private PhiMarketingNewEntities db = null;
+        private SurveyDBEntities db = null;
         public Survey()
         {
             ContactInfo = new ContactInfo();
@@ -35,10 +34,10 @@ namespace PhiMarketing.Models
 
         public void Init()
         {
-            using (db = new PhiMarketingNewEntities())
+            using (db = new SurveyDBEntities())
             {
                 var ls = db.GetSurveyList();
-                foreach (Entity.GetSurveyList_Result row in ls)
+                foreach (GetSurveyList_Result row in ls)
                 {
                     SurveyID = row.SurveyID;
                     SurveyTitle = row.Title;
@@ -53,7 +52,7 @@ namespace PhiMarketing.Models
         private void InitSubjects(List<Subject> subjects)
         {
             List<GetSurveySubjects_Result> ls = db.GetSurveySubjects(SurveyID).ToList();
-            foreach (Entity.GetSurveySubjects_Result row in ls)
+            foreach (GetSurveySubjects_Result row in ls)
             {
                 Subject newSubject = new Subject();
                 newSubject.Title = row.Title;
@@ -93,7 +92,7 @@ namespace PhiMarketing.Models
                 ls = db.GetSurveyQuestions(SurveyID).Where(g => g.SubjectID == null).OrderBy(s => s.SeqNo).ToList();
             else
                 ls = db.GetSurveyQuestions(SurveyID).Where(g => g.SubjectID == subject.SubjectID).OrderBy(s => s.SeqNo).ToList();
-            foreach (Entity.GetSurveyQuestions_Result q in ls)
+            foreach (GetSurveyQuestions_Result q in ls)
             {
                 Question newQuestion = new Question();
                 newQuestion.SurveyID = SurveyID;
@@ -116,7 +115,7 @@ namespace PhiMarketing.Models
         {
             List<PossibleAnswer> possibleAnswers = new List<PossibleAnswer>();
             var ls = db.GetSurveyPossibleAnswers(SurveyID).Where(g => g.QuestionID == question.QuestionID).OrderBy(s => s.SeqNo);
-            foreach (Entity.GetSurveyPossibleAnswers_Result a in ls)
+            foreach (GetSurveyPossibleAnswers_Result a in ls)
             {
                 PossibleAnswer newAnswer = new PossibleAnswer();
                 newAnswer.AnswerID = a.AnswerID;
@@ -130,20 +129,20 @@ namespace PhiMarketing.Models
 
         public bool CollectAnswers(Survey survey)
         {
-            using (PhiMarketingNewEntities context = new PhiMarketingNewEntities())
+            using (SurveyDBEntities context = new SurveyDBEntities())
             {
                 using (var dbTransaction = context.Database.BeginTransaction())
                 {
                     try
                     {
-                        Phi_SurveyResponse response = context.Phi_SurveyResponse.Create();
+                        SurveyResponse response = context.SurveyResponses.Create();
                         response.SurveyID = survey.SurveyID;
                         response.Company = this.ContactInfo.Company;
                         response.FullName = this.ContactInfo.FullName;
                         response.Email = this.ContactInfo.Email;
                         response.Completed = true;
                         response.LastUpdatedOn = DateTime.Now;
-                        context.Phi_SurveyResponse.Add(response);
+                        context.SurveyResponses.Add(response);
                         context.SaveChanges();
                         int i = 0;
                         foreach (Subject subject in survey.Subjects)
@@ -151,12 +150,12 @@ namespace PhiMarketing.Models
                             foreach (Question question in subject.Questions)
                             {
                                 Answer answer = this.Answers[i++];
-                                Phi_ResponseAnswer responseAnswer = context.Phi_ResponseAnswer.Create();
+                                ResponseAnswer responseAnswer = context.ResponseAnswers.Create();
                                 responseAnswer.ResponseID = response.ResponseID;
                                 responseAnswer.QuestionID = question.QuestionID;
                                 responseAnswer.SelectedAnswer = (int)answer.SelectedAnswer;
                                 responseAnswer.AnswerText = answer.AnswerText;
-                                context.Phi_ResponseAnswer.Add(responseAnswer);
+                                context.ResponseAnswers.Add(responseAnswer);
                             }
                         }
                         context.SaveChanges();
@@ -166,7 +165,7 @@ namespace PhiMarketing.Models
                     catch (Exception ex)
                     {
                         dbTransaction.Rollback();
-                        LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Saving to database Error", ex);
+                        //LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Saving to database Error", ex);
                         return false;
                     }
                 }

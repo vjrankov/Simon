@@ -3,16 +3,14 @@ using System.Text;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Mvc;
-using PhiMarketing.Entity;
+using anonQuest.Entity;
 using PhiMarketing.Models;
-using Umbraco.Core.Logging;
-using Umbraco.Web;
 
 namespace PhiMarketing.Controllers
 {
     public class SurveyController : Controller
     {
-        private PhiMarketingNewEntities db = new PhiMarketingNewEntities();
+        private SurveyDBEntities db = new SurveyDBEntities();
 
         [HttpGet]
         public ActionResult FillOut()
